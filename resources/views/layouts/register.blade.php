@@ -9,7 +9,7 @@
     <form action="/register" method="POST">
         @csrf
         <div class="mb-3">
-            <label for="exampleInputName" class="form-label">Name</label>
+            <label for="exampleInputName" class="form-label">Journalist Name</label>
             <input name="name" type="text" class="form-control" id="exampleInputName" value="{{old('name')}}">
             @error('name')
                 <p class="text-danger">{{$message}}</p>

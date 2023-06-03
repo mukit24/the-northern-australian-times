@@ -37,6 +37,7 @@ Route::get('/create-article-page', [ArticleController::class, 'displayCreateArti
 Route::post('/create-article', [ArticleController::class, 'createArticle']);
 Route::get('/edit-article/{id}', [ArticleController::class, 'displayEdit'])->name('displayEdit');
 Route::put('/edit-article/{id}', [ArticleController::class, 'editArticle']);
-Route::delete('/delete-article/{id}', [ArticleController::class, 'deleteArticle'])->name('deleteArticle');;
+Route::delete('/delete-article/{id}', [ArticleController::class, 'deleteArticle'])->name('deleteArticle');
 
 Route::post('/create-comment/{id}', [ArticleController::class, 'createComment'])->name('createComment');
+Route::delete('/delete-comment/{article_id}/{comment_id}', [ArticleController::class, 'deleteComment'])->name('deleteComment');

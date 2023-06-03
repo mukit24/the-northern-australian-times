@@ -70,7 +70,7 @@ class ArticleController extends Controller
         }
 
         $article->update($incomingFields);
-        return redirect()->route('articleDetails',$article->id);
+        return redirect()->route('articleDetails',$article->id)->with('message', 'Article is successfully modified.');
     }
 
 
@@ -78,10 +78,11 @@ class ArticleController extends Controller
         $article = Article::with('user')->findOrFail($id);
         if (auth()->user()->id === $article['user_id']) {
             $article->delete();
-            return redirect('/articles')->with('message', 'Delete');
+            return redirect('/articles')->with('message', 'Article is successfully deleted.');
         }
         elseif(auth()->user()->is_admin === 1){
-            return redirect('/articles')->with('message', 'Delete');
+            $article->delete();
+            return redirect('/articles')->with('message', 'Article is successfully deleted.');
         }
         else{
             return redirect('/');
@@ -97,8 +98,17 @@ class ArticleController extends Controller
 
         $incomingFields['article_id'] = $id;
         Comment::create($incomingFields);
-        return redirect()->route('articleDetails', $id);
+        return redirect()->route('articleDetails', $id)->with('message', 'Comment has been successfully posted');
     }
 
-
+    public function deleteComment($article_id,$comment_id) {
+        $comment = Comment::where('id', $comment_id)->where('article_id', $article_id)->first();
+        if(auth()->user()->is_admin === 1){
+            $comment->delete();
+            return redirect()->route('articleDetails',$article_id)->with('message', 'Comment is successfully deleted.');
+        }
+        else{
+            return redirect('/');
+        }
+    }
 }
